@@ -1,15 +1,14 @@
 package main
 
 import (
+	"arduino-golang-daily-quote/hd44780"
 	m "machine"
 	"time"
-
-	"tinygo.org/x/drivers/hd44780"
 )
 
 func main() {
 	m.Serial.Configure(m.UARTConfig{BaudRate: 9600})
-	lcd, err := hd44780.NewGPIO4Bit([]m.Pin{m.D12, m.D11, m.D10, m.D9}, m.D8, m.D7, m.NoPin)
+	lcd, err := hd44780.NewGPIO8Bit([]m.Pin{m.D0, m.D1, m.D2, m.D3, m.D4, m.D5, m.D6, m.D7}, m.D13, m.D12, m.NoPin)
 	if err != nil {
 		println("error: create LCD", err.Error())
 		return
@@ -21,11 +20,13 @@ func main() {
 
 	for {
 		println("Start")
-		lcd.Write([]byte("Hello World!"))
-		err = lcd.Display()
-		if err != nil {
-			println("error: display", err.Error())
-		}
+
+		lcd.ClearBuffer()
+		lcd.ClearDisplay()
+		lcd.SetCursor(0, 0)
+		lcd.Write([]byte("A"))
+		lcd.Display()
+
 		time.Sleep(1 * time.Second)
 	}
 }
