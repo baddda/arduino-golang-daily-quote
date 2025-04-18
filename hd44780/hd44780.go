@@ -27,6 +27,7 @@ type Buser interface {
 	io.ReadWriter
 	SetCommandMode(set bool)
 	WriteOnly() bool
+	writeBinaryArray(binaryData []int)
 }
 
 type Device struct {
@@ -278,4 +279,10 @@ func (d *Device) ClearDisplay() {
 // ClearBuffer clears internal buffer
 func (d *Device) ClearBuffer() {
 	d.buffer = make([]uint8, d.width*d.height)
+}
+
+/* Functions for debugging. */
+
+func (d *Device) Test() {
+	d.bus.writeBinaryArray([]int{ 1, 0, 0, 0, 0, 0, 0, 0 })
 }

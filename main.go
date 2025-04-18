@@ -3,7 +3,6 @@ package main
 import (
 	"arduino-golang-daily-quote/hd44780"
 	m "machine"
-	"time"
 )
 
 func main() {
@@ -18,15 +17,5 @@ func main() {
 		return
 	}
 
-	for {
-		println("Start")
-
-		lcd.ClearBuffer()
-		lcd.ClearDisplay()
-		lcd.SetCursor(0, 0)
-		lcd.Write([]byte("A"))
-		lcd.Display()
-
-		time.Sleep(1 * time.Second)
-	}
+	lcd.Test()
 }

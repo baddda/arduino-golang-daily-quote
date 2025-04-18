@@ -2,7 +2,6 @@ package hd44780
 
 import (
 	"errors"
-
 	"machine"
 )
 
@@ -156,4 +155,20 @@ func (g *GPIO) pins() byte {
 		}
 	}
 	return bits
+}
+
+/* Functions for debugging. */
+
+func (g *GPIO) writeBinaryArray(binaryData []int) {
+	g.en.High()
+
+	for i := 0; i < len(g.dataPins); i++ {
+		if g.dataPins[i] == 1 {
+			g.dataPins[i].High()
+		} else {
+			g.dataPins[i].Low()
+		}
+	}
+
+	g.en.Low()
 }
