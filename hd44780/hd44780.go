@@ -286,10 +286,25 @@ func (d *Device) ClearBuffer() {
 func (d *Device) Test() {
 	println("Clean display")
 	d.bus.SetCommandMode(true)
-	d.bus.writeBinaryArray([]int{ 0, 0, 0, 0, 0, 0, 0, 1 }) 	// Clear display. TODO: Why it is not cleared completely?
+	d.bus.writeBinaryArray([]int{ 0, 0, 0, 0, 0, 0, 0, 1 }) 
 	time.Sleep(1 * time.Second)
 
-	for {
+
+	println("Set cursor")
+	d.bus.SetCommandMode(true)
+	// Why is 10000000 written at position 1?
+	// Why is 10000001 written at position 1?
+	// Why is 10000010 written at position 1?  
+	// Why is 10000011 written at position 1?  
+	// Why is 10000100 written at position 5?
+	// Why is 10000101 written at position 5?    
+	// Why is 10000111 written at position 5?
+	// Why is 10001000 written at position 11?
+	d.bus.writeBinaryArray([]int{ 1, 0, 0, 0, 1, 0, 0, 0 })
+	time.Sleep(1 * time.Second)
+
+
+/* 	for {
 		time.Sleep(1 * time.Second)
 
 
@@ -297,13 +312,5 @@ func (d *Device) Test() {
 		time.Sleep(1 * time.Second)
 		d.bus.SetCommandMode(true)
 		d.bus.writeBinaryArray([]int{ 0, 0, 0, 1, 0, 1, 0, 0 })
-	}
-
-
-/* 	time.Sleep(1 * time.Second)
-	d.SendCommand(DISPLAY_CLEAR)
-	for {
-		time.Sleep(1 * time.Second)
-		d.SendCommand(CURSOR_SHIFT_RIGHT)
 	} */
 }
