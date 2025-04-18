@@ -284,5 +284,26 @@ func (d *Device) ClearBuffer() {
 /* Functions for debugging. */
 
 func (d *Device) Test() {
-	d.bus.writeBinaryArray([]int{ 1, 0, 0, 0, 0, 0, 0, 0 })
+	println("Clean display")
+	d.bus.SetCommandMode(true)
+	d.bus.writeBinaryArray([]int{ 0, 0, 0, 0, 0, 0, 0, 1 }) 	// Clear display. TODO: Why it is not cleared completely?
+	time.Sleep(1 * time.Second)
+
+	for {
+		time.Sleep(1 * time.Second)
+
+
+		println("Shift cursor right")
+		time.Sleep(1 * time.Second)
+		d.bus.SetCommandMode(true)
+		d.bus.writeBinaryArray([]int{ 0, 0, 0, 1, 0, 1, 0, 0 })
+	}
+
+
+/* 	time.Sleep(1 * time.Second)
+	d.SendCommand(DISPLAY_CLEAR)
+	for {
+		time.Sleep(1 * time.Second)
+		d.SendCommand(CURSOR_SHIFT_RIGHT)
+	} */
 }

@@ -158,17 +158,15 @@ func (g *GPIO) pins() byte {
 }
 
 /* Functions for debugging. */
-
+// Binary array is written backwards to the pins.
 func (g *GPIO) writeBinaryArray(binaryData []int) {
 	g.en.High()
-
-	for i := 0; i < len(g.dataPins); i++ {
-		if g.dataPins[i] == 1 {
-			g.dataPins[i].High()
+	for i := 0; i < len(binaryData); i++ {
+		if binaryData[i] == 1 {
+			g.dataPins[len(binaryData) - i - 1].High()
 		} else {
-			g.dataPins[i].Low()
+			g.dataPins[len(binaryData) - i - 1].Low()
 		}
 	}
-
 	g.en.Low()
 }
